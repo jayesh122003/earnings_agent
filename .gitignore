@@ -4,4 +4,5 @@ __pycache__/
 *.pyc
 .DS_Store
 data/
-chroma_db/.claude/
+chroma_db/
+.claude/
