@@ -1,0 +1,10 @@
+openai
+chromadb
+tiktoken
+sec-edgar-downloader
+pandas
+streamlit
+plotly
+python-dotenv
+requests
+beautifulsoup4
