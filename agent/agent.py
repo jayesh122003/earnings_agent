@@ -1,4 +1,4 @@
-from tools import download_earnings_report, index_document, search_knowledge_base
+from tools import download_earnings_report, index_document, search_knowledge_base, get_stock_price
 from openai import OpenAI
 import json
 
@@ -125,14 +125,22 @@ def run_agent(question, session_state):
         elif finish_reason == "tool_calls":
             messages.append(message)
             for tool_call in message.tool_calls:
-                name = tool_call.function.name #the tool LLM wants to call 
-                args = json.loads(tool_call.function.arguments) #the arguments, parsed from JSON into python dictionary 
+                name = tool_call.function.name #the tool LLM wants to call
+                args = json.loads(tool_call.function.arguments) #the arguments, parsed from JSON into python dictionary
                 print(f"Agent calling: {name} with {args}")
-                result = tool_map[name](**args)
+                try:
+                    result = tool_map[name](**args)
+                    content = format_tool_result(name, result)
+                except Exception as e:
+                    # Always respond to every tool_call_id — if we don't,
+                    # the next API call fails with a BadRequestError because
+                    # the assistant message references a tool_call_id with no response.
+                    content = f"Error executing {name}: {str(e)}"
+                    print(f"Tool error ({name}): {e}")
                 messages.append({
                     "role": "tool",
                     "tool_call_id": tool_call.id,
-                    "content": format_tool_result(name, result)
+                    "content": content
                 })
 
 def format_tool_result(name, result):
@@ -160,3 +168,6 @@ if __name__ == '__main__':
     print(answer)
     follow_up = run_agent("How does that compare to Services revenue?", session_state)
     print(follow_up)
+
+
+    
