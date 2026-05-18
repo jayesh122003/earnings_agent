@@ -765,9 +765,19 @@ else:
 
 
 # ---------------------------------------------------------------------------
-# Chat input (pinned to bottom)
+# Input area
 # ---------------------------------------------------------------------------
-if prompt := st.chat_input("Ask about a company's latest 10-Q filing..."):
-    with st.spinner(""):
+st.markdown("<div style='height: 0.5rem'></div>", unsafe_allow_html=True)
+prompt = st.text_area(
+    "Question",
+    placeholder="e.g. What were Apple's red flags in their latest 10-Q?",
+    height=90,
+    label_visibility="collapsed",
+)
+col1, col2 = st.columns([6, 1])
+with col2:
+    submit = st.button("Ask →", type="primary", use_container_width=True, disabled=not (prompt and prompt.strip()))
+if submit and prompt.strip():
+    with st.spinner("Agent is researching the filing..."):
         ask_agent(prompt.strip())
     st.rerun()
