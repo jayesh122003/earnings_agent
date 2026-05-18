@@ -32,6 +32,7 @@ st.markdown(
     """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 /* ── Global ─────────────────────────────────────────────────────────── */
 html, body, [data-testid="stAppViewContainer"] {
@@ -343,7 +344,7 @@ html, body, [data-testid="stAppViewContainer"] {
     background: rgba(255, 106, 0, 0.05);
 }
 
-/* ── Expander (reasoning panel) ─────────────────────────────────────── */
+/* ── Expander (source chunks panel) ─────────────────────────────────── */
 [data-testid="stExpander"] {
     background: #0D1117;
     border: 1px solid #1E2530;
@@ -353,6 +354,16 @@ html, body, [data-testid="stAppViewContainer"] {
 [data-testid="stExpander"] summary {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.75rem;
+    color: #6E7681;
+}
+
+/* Material Icons font — makes Streamlit's built-in expander arrow
+   render as an actual icon instead of literal text */
+[data-testid="stIconMaterial"] {
+    font-family: 'Material Icons' !important;
+    font-style: normal;
+    font-size: 1rem;
+    vertical-align: middle;
     color: #6E7681;
 }
 
@@ -582,7 +593,7 @@ def render_message(msg):
                         )
 
             if citations:
-                with st.expander(f"[ {len(citations)} source chunk{'s' if len(citations) != 1 else ''} ]"):
+                with st.expander(f"View {len(citations)} source chunk{'s' if len(citations) != 1 else ''}"):
                     st.markdown(
                         '<p style="font-size:0.75rem; color:#6E7681; margin-bottom:0.5rem;">'
                         "Chunk IDs referenced in this answer. To see full chunk text, "
