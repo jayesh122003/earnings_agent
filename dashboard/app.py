@@ -32,7 +32,6 @@ st.markdown(
     """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 /* ── Global ─────────────────────────────────────────────────────────── */
 html, body, [data-testid="stAppViewContainer"] {
@@ -357,14 +356,10 @@ html, body, [data-testid="stAppViewContainer"] {
     color: #6E7681;
 }
 
-/* Material Icons font — makes Streamlit's built-in expander arrow
-   render as an actual icon instead of literal text */
+/* Hide Streamlit's material icon text — it renders as literal
+   "keyboard_arrow_right/down" without the font loaded */
 [data-testid="stIconMaterial"] {
-    font-family: 'Material Icons' !important;
-    font-style: normal;
-    font-size: 1rem;
-    vertical-align: middle;
-    color: #6E7681;
+    display: none !important;
 }
 
 /* ── Metrics ────────────────────────────────────────────────────────── */
