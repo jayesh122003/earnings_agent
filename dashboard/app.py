@@ -510,7 +510,22 @@ def parse_citations(text: str):
 
 def ask_agent(question: str):
     start = time.time()
-    answer = run_agent(question, st.session_state.agent_memory)
+    try:
+        answer = run_agent(question, st.session_state.agent_memory)
+    except Exception as e:
+        err = str(e)
+        # Corrupted message history — orphaned tool_call with no response.
+        # Reset agent memory so the next query starts clean.
+        if "tool_call_id" in err or "tool_calls" in err:
+            st.session_state.agent_memory = {}
+            st.error(
+                "The agent hit a tool error on the previous query and the "
+                "conversation history became corrupted. Session has been reset — "
+                "please ask your question again."
+            )
+        else:
+            st.error(f"Agent error: {err}")
+        return
     elapsed = time.time() - start
 
     st.session_state.total_latency += elapsed
