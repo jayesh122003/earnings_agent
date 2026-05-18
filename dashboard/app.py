@@ -203,7 +203,7 @@ html, body, [data-testid="stAppViewContainer"] {
 
 [data-testid="stChatMessage"] code {
     background: #1E2530;
-    color: #79C0FF;
+    color: #C9D1D9;
     padding: 1px 5px;
     border-radius: 3px;
     font-family: 'JetBrains Mono', monospace;
@@ -567,7 +567,7 @@ def render_message(msg):
                         )
 
             if citations:
-                with st.expander(f"📎 View {len(citations)} source chunks"):
+                with st.expander(f"[ {len(citations)} source chunk{'s' if len(citations) != 1 else ''} ]"):
                     st.markdown(
                         '<p style="font-size:0.75rem; color:#6E7681; margin-bottom:0.5rem;">'
                         "Chunk IDs referenced in this answer. To see full chunk text, "
